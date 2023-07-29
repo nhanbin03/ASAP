@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
+    public Sprite NormalArm;
+    public Sprite ArmedArm;
+
     public bool IsChanneling = false;
     private SpriteRenderer _sprite;
     private bool _isActive;
@@ -38,16 +41,29 @@ public class Controller : MonoBehaviour
                 _curTime += Time.deltaTime;
                 if (_curTime > CHANNEL_TIME) {
                     Debug.Log("Win!");
+                    _curTime = 0;
                 }
+                UpdateChanneling();
             } else {
                 IsChanneling = false;
                 _curTime = 0;
             }
             if (IsChanneling) {
-                _sprite.color = Color.blue;
+                _sprite.sprite = ArmedArm;
             } else {
-                _sprite.color = Color.red;
+                _sprite.sprite = NormalArm;
+                _sprite.transform.rotation = Quaternion.Euler(0, 0, 0);
             }
+        }
+    }
+
+    private void UpdateChanneling() {
+        if (_curTime < CHANNEL_TIME * 5 / 6) {
+            double totalTime = CHANNEL_TIME * 5 / 6;
+            _sprite.transform.rotation = Quaternion.Euler(0, 0, 90 + (180 - 90) * (float) (_curTime / totalTime));
+        } else {
+            double totalTime = CHANNEL_TIME / 6;
+            _sprite.transform.rotation = Quaternion.Euler(0, 0, 90 + (0 - 90) * (float)((_curTime - CHANNEL_TIME * 5 / 6) / totalTime));
         }
     }
 }
