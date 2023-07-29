@@ -61,11 +61,15 @@ public class TargetController : MonoBehaviour
             }
             if (_patternState % 2 == 0)
             {
-                _sprite.color = Color.blue;
+                Vector3 newScale = transform.localScale;
+                newScale.x = Math.Abs(newScale.x);
+                transform.localScale = newScale;
             }
             else
             {
-                _sprite.color = Color.red;
+                Vector3 newScale = transform.localScale;
+                newScale.x = -Math.Abs(newScale.x);
+                transform.localScale = newScale;
             }
             if (player.GetComponent<Controller>().IsChanneling && _patternState % 2 == 1) {
                 Debug.Log("Detected!");
