@@ -3,12 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class TargetController : MonoBehaviour
 {
     public GameObject player;
 
-    private float[] _patternArray = {1, 1};
-    private float _curTime = 0;
+    public double[][] PatternManager = {
+        new double[] {2, 2},
+        new double[] {0.5, 1, 0.5, 1, 2, 1},
+        new double[] {0.5, 0.5, 0.5, 0.5, 2, 0.5, 0.5, 0.5},
+        new double[] {2, 0.5, 1, 1, 1.2, 0.5, 1.2, 0.5},
+        new double[] {2, 0.5, 2, 0.5, 2, 0.5, 0.2, 0.5},
+        new double[] {0.5, 1, 0.2, 0.5, 1.5, 0.2, 0.2, 0.2},
+        new double[] {1.5, 0.5},
+        new double[] {1.5, 1, 0.5, 0.5, 0.5, 1}
+    };
+
+    private double[] _patternArray; 
+    private double _curTime = 0;
     private int _patternState = 0;
 
 
@@ -25,6 +37,7 @@ public class TargetController : MonoBehaviour
         GameManager.OnGameStateChanged -= GameManagerOnOnGameStateChanged;
     }
 
+
     private void GameManagerOnOnGameStateChanged(GameState state)
     {
         Debug.Log(state.ToString());
@@ -32,6 +45,7 @@ public class TargetController : MonoBehaviour
     }
 
     void Start() {
+        _patternArray = PatternManager[PatternManager.Length - 1];
         _sprite = GetComponent<SpriteRenderer>();
     }
 
