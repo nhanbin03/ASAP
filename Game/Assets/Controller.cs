@@ -9,6 +9,10 @@ public class Controller : MonoBehaviour
     private SpriteRenderer _sprite;
     private bool _isActive;
 
+
+    public const double CHANNEL_TIME = 1.2f;
+    private double _curTime = 0;
+
     void Awake() {
         GameManager.OnGameStateChanged += GameManagerOnOnGameStateChanged;
     }
@@ -31,8 +35,13 @@ public class Controller : MonoBehaviour
         if (_isActive) {
             if (Input.GetKey(KeyCode.Space)) {
                 IsChanneling = true;
+                _curTime += Time.deltaTime;
+                if (_curTime > CHANNEL_TIME) {
+                    Debug.Log("Win!");
+                }
             } else {
                 IsChanneling = false;
+                _curTime = 0;
             }
             if (IsChanneling) {
                 _sprite.color = Color.blue;
