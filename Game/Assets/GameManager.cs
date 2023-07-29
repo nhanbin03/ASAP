@@ -15,6 +15,10 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
+    void Start() {
+        UpdateGameState(GameState.Gameplay);
+    }
+
     public void UpdateGameState(GameState newState) {
         State = newState;
 

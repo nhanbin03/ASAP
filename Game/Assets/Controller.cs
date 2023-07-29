@@ -1,32 +1,44 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
-    private bool isChanneling = false;
-    private SpriteRenderer sprite;
+    public bool IsChanneling = false;
+    private SpriteRenderer _sprite;
+    private bool _isActive;
 
-    public bool IsChanneling { get => isChanneling; set => isChanneling = value; }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        sprite = GetComponent<SpriteRenderer>();
+    void Awake() {
+        GameManager.OnGameStateChanged += GameManagerOnOnGameStateChanged;
     }
 
-    // Update is called once per frame
+    void OnDestroy() {
+        GameManager.OnGameStateChanged -= GameManagerOnOnGameStateChanged;
+    }
+
+    private void GameManagerOnOnGameStateChanged(GameState state) {
+        _isActive = state == GameState.Gameplay;
+    }
+
+    void Start()
+    {
+        _sprite = GetComponent<SpriteRenderer>();
+    }
+
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space)) {
-            isChanneling = true;
-        } else {
-            isChanneling = false;
-        }
-        if (isChanneling) {
-            sprite.color = Color.blue;
-        } else {
-            sprite.color = Color.red;
+        if (_isActive) {
+            if (Input.GetKey(KeyCode.Space)) {
+                IsChanneling = true;
+            } else {
+                IsChanneling = false;
+            }
+            if (IsChanneling) {
+                _sprite.color = Color.blue;
+            } else {
+                _sprite.color = Color.red;
+            }
         }
     }
 }
