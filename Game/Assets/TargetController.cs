@@ -7,6 +7,7 @@ using TMPro;
 
 public class TargetController : MonoBehaviour
 {
+    public GameObject WarningSign;
     public GameObject player;
     public TextMeshProUGUI LevelDisplayer;
 
@@ -75,9 +76,15 @@ public class TargetController : MonoBehaviour
                 Vector3 newScale = transform.localScale;
                 newScale.x = Math.Abs(newScale.x);
                 transform.localScale = newScale;
+                WarningSign.SetActive(false);
+                if (_curTime > _patternArray[_patternState] * 0.8) {
+                    WarningSign.SetActive(true);
+
+                }
             }
             else
             {
+                WarningSign.SetActive(false);
                 Vector3 newScale = transform.localScale;
                 newScale.x = -Math.Abs(newScale.x);
                 transform.localScale = newScale;
