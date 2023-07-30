@@ -17,14 +17,14 @@ public class GameManager : MonoBehaviour
     }
 
     void Start() {
-        UpdateGameState(GameState.Gameplay);
+        UpdateGameState(GameState.Home);
     }
 
     public void UpdateGameState(GameState newState) {
         State = newState;
 
         switch (newState) {
-            case GameState.SelectDifficulty:
+            case GameState.Home:
                 break;
             case GameState.Gameplay:
                 break;
@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
 }
 
 public enum GameState {
-    SelectDifficulty,
+    Home,
     Gameplay,
     Victory,
     Lose

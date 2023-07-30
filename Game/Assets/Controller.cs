@@ -16,6 +16,7 @@ public class Controller : MonoBehaviour
     public const double CHANNEL_TIME = 1.2f;
     private double _curTime = 0;
 
+
     void Awake() {
         GameManager.OnGameStateChanged += GameManagerOnOnGameStateChanged;
     }
@@ -40,7 +41,7 @@ public class Controller : MonoBehaviour
                 IsChanneling = true;
                 _curTime += Time.deltaTime;
                 if (_curTime > CHANNEL_TIME) {
-                    Debug.Log("Win!");
+                    GameManager.Instance.UpdateGameState(GameState.Victory);
                     _curTime = 0;
                 }
                 UpdateChanneling();
